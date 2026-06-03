@@ -1,64 +1,61 @@
 import streamlit as st
 
-# 1. KONFIGURASI HALAMAN
-st.set_page_config(
-    page_title="Pusat Respon Darurat Kimia",
-    page_icon="🚨",
-    layout="wide"
-)
-
-# 2. HEADER UTAMA
-st.title("🚨 Pusat Respon Cepat: Terkena Bahan Kimia")
-st.write("Aplikasi panduan K3 instan untuk pertolongan pertama kecelakaan kerja di laboratorium.")
+# 1. Judul Aplikasi
+st.title("🚨 Respon Cepat Terkena Bahan Kimia")
+st.write("Klik salah satu tombol di bawah ini sesuai dengan insiden yang terjadi untuk melihat panduan pertolongan pertama secara instan.")
 st.markdown("---")
 
-# 3. LAYOUT DUA KOLOM (Kiri: Navigasi Kasus, Kanan: Kontak & Alat Bantu)
-col_utama, col_info = st.columns([3, 1])
+# 2. Navigasi Menggunakan Tombol Sederhana
+# Kita membuat 4 tombol besar yang mudah diklik saat darurat
+pilihan_menu = st.radio(
+    "PILIH JENIS KECELAKAAN KERJA:",
+    ("Silakan Pilih", "Terkena Mata", "Terkena Kulit / Badan", "Tertelan Bahan Kimia", "Terhirup Gas Beracun")
+)
 
-with col_utama:
-    st.subheader("⚠️ PILIH KONDISI DARURAT")
-    
-    # Menggunakan Tabs untuk navigasi yang anti-lag dan super stabil
-    tab_mata, tab_kulit, tab_tertelan, tab_terhirup = st.tabs([
-        "👁️ Terkena Mata", 
-        "🦺 Terkena Kulit", 
-        "👄 Tertelan Zat", 
-        "🫁 Terhirup Gas"
-    ])
-    
-    # --- TAB 1: TERKENA MATA ---
-    with tab_mata:
-        st.error("### Prosedur Evakuasi Mata (Kontaminasi Okular)")
-        st.markdown("""
-        1. **LANGSUNG MENUJU EYE WASH STATION:** Jangan menunda waktu bahkan untuk 1 detik pun.
-        2. **BILAS DENGAN AIR MENGALIR:** Buka kelopak mata lebar-lebar menggunakan jari tangan. Arahkan aliran air langsung ke bola mata.
-        3. **DURASI WAJIB:** Bilas terus-menerus selama **minimal 15 menit**.
-        4. **LEPAS LENSA KONTAK:** Jika menggunakan softlens, lepaskan di tengah-tengah pembilasan secara hati-hati.
-        5. **JANGAN DIKUCEK:** Menggosok mata dapat menggores kornea dan mempercepat penyerapan zat korosif.
-        """)
-        
-        # Tombol konfirmasi pengganti timer otomatis yang rawan error
-        if st.button("Sudah Membilas 15 Menit? Cek Langkah Selanjutnya", key="btn_mata"):
-            st.info("ℹ️ **Langkah Selanjutnya:** Tutup mata korban menggunakan kain kasa steril secara longgar (jangan ditekan), lalu segera bawa ke dokter spesialis mata.")
+st.markdown("---")
 
-    # --- TAB 2: TERKENA KULIT ---
-    with tab_kulit:
-        st.error("### Prosedur Tumpahan Bahan Kimia pada Tubuh/Kulit")
-        st.markdown("""
-        1. **GUNAKAN SAFETY SHOWER:** Jika tumpahan cairan asam/basa pekat mengenai pakaian atau area kulit yang luas.
-        2. **LEPAS PAKAIAN TERKONTAMINASI:** Lepaskan jas lab, baju, jam tangan, atau perhiasan selagi tubuh diguyur air.
-        3. **BILAS 15 MENIT:** Pastikan area kulit yang terkena dibilas air mengalir dalam jumlah banyak untuk mengencerkan zat kimia.
-        4. **JANGAN NETRALKAN DI KULIT:** Jangan menyiramkan larutan basa (seperti sabun) pada kulit yang terkena asam, karena reaksi penetralan menghasilkan panas tinggi yang memperparah luka bakar.
-        """)
-        if st.button("Sudah Membilas Kulit? Cek Langkah Selanjutnya", key="btn_kulit"):
-            st.info("ℹ️ **Langkah Selanjutnya:** Jangan oleskan pasta gigi, mentega, atau minyak. Tutup luka dengan kain bersih dan segera cari bantuan medis.")
+# 3. Logika Menampilkan Informasi Berdasarkan Pilihan
+if pilihan_menu == "Silakan Pilih":
+    st.info("💡 Pilih salah satu opsi di atas untuk langsung menampilkan panduan K3.")
 
-    # --- TAB 3: TERTELAN ZAT ---
-    with tab_tertelan:
-        st.error("### Prosedur Pertolongan Pertama Zat Tertelan (Ingesti)")
-        st.markdown("""
-        1. **JANGAN DIPAKSA MUNTAH:** Jika zat yang tertelan bersifat korosif (seperti asam sulfat atau soda api), memaksa muntah akan merusak dinding kerongkongan untuk kedua kalinya.
-        2. **KUMUR DENGAN AIR:** Jika korban sadar, minta untuk berkumur dengan air bersih berkali-kali untuk membersihkan sisa zat di mulut.
-        3. **MINUM AIR PUTIH:** Berikan 1-2 gelas air putih untuk mengencerkan racun di dalam lambung (hanya jika korban sadar penuh dan bisa menelan).
-        """)
-        if st.button("Lihat Peringatan Medis Pent
+elif pilihan_menu == "Terkena Mata":
+    st.error("### 👁️ PANDUAN: TERKENA MATA")
+    st.markdown("""
+    * **Langkah 1:** Segera bawa korban ke pancuran pembilas mata (*Eye Wash Station*).
+    * **Langkah 2:** Bilas mata menggunakan air bersih mengalir selama **minimal 15 menit**.
+    * **Langkah 3:** Paksa kelopak mata tetap terbuka lebar saat dibilas agar zat kimia encer dan keluar.
+    * **Langkah 4:** Jangan menggosok atau mengucek mata dengan tangan atau tisu.
+    * **Langkah 5:** Setelah 15 menit, tutup mata secara longgar dengan kain bersih dan segera bawa ke dokter.
+    """)
+
+elif pilihan_menu == "Terkena Kulit / Badan":
+    st.error("### 🦺 PANDUAN: TERKENA KULIT / BADAN")
+    st.markdown("""
+    * **Langkah 1:** Jika tumpahan zat kimia pekat mengenai area baju/tubuh yang luas, segera berdiri di bawah *Safety Shower* (pancuran darurat).
+    * **Langkah 2:** Sambil diguyur air, lepaskan semua pakaian, jas lab, dan perhiasan yang terkena bahan kimia.
+    * **Langkah 3:** Bilas kulit yang terkena di bawah air mengalir selama **minimal 15 menit**.
+    * **Langkah 4:** Jangan mengoleskan pasta gigi, mentega, minyak, atau zat penetral (reaksi penetralan justru memicu panas berlebih pada luka).
+    * **Langkah 5:** Segera bawa korban ke fasilitas medis terdekat.
+    """)
+
+elif pilihan_menu == "Tertelan Bahan Kimia":
+    st.error("### 👄 PANDUAN: TERTELAN BAHAN KIMIA")
+    st.markdown("""
+    * **Langkah 1:** Jika korban masih sadar, minta mereka berkumur dengan air bersih berkali-kali untuk membersihkan sisa zat di mulut.
+    * **Langkah 2:** **JANGAN MEMAKSA KORBAN UNTUK MUNTAH** (terutama jika yang tertelan adalah asam/basa kuat, karena memicu muntah akan merusak dinding kerongkongan untuk kedua kalinya).
+    * **Langkah 3:** Berikan 1 atau 2 gelas air putih murni untuk mengencerkan zat di lambung (HANYA jika korban sadar penuh).
+    * **Langkah 4:** Segera hubungi ambulans atau bawa ke IGD rumah sakit.
+    """)
+
+elif pilihan_menu == "Terhirup Gas Beracun":
+    st.error("### 🫁 PANDUAN: TERHIRUP GAS BERACUN")
+    st.markdown("""
+    * **Langkah 1:** Amankan diri Anda dulu (pakai masker respirator khusus) sebelum menolong korban di area penuh gas.
+    * **Langkah 2:** Evakuasi korban secepatnya ke area terbuka yang memiliki **udara segar dan bersih**.
+    * **Langkah 3:** Longgarkan pakaian bagian atas korban (seperti kerah baju atau dasi) untuk melancarkan pernapasan.
+    * **Langkah 4:** Jika korban berhenti bernapas dan Anda menguasai tekniknya, berikan bantuan napas buatan (CPR).
+    """)
+
+# 4. Footer Kontak Darurat Tetap Ada di Bawah
+st.markdown("---")
+st.warning("📞 **Nomor Telepon Darurat Medis (Ambulans): 118 / 119**")
